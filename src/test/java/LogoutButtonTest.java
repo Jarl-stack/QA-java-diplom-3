@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.Assert.assertEquals;
 
 public class LogoutButtonTest {
@@ -37,8 +36,7 @@ public class LogoutButtonTest {
     @DisplayName("Logout from Profile page by clicking Logout button")
     public void logoutFromProfileByClickingLogoutButton() {
 
-        boolean isEnterHeaderExist = mainPage.constructionContainerShouldBeVisible()
-                .clickProfileButtonAfterAuth()
+        boolean isEnterHeaderExist = mainPage.clickProfileButtonAfterAuth()
                 .clickExitButton()
                 .isHeaderShouldBeExist();
 

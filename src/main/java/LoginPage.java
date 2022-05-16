@@ -5,8 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
 
@@ -23,6 +22,12 @@ public class LoginPage {
 
     private SelenideElement enterHeader = $(By.xpath("//h2[contains(text(),'Вход')]"));
 
+    @Step("New Test method for rename")
+    public MainPage clickAuthButtonTestMethod() {
+        authorizationButton.click();
+        return page(MainPage.class);
+    }
+
 
     @Step("Wait until Auth button is appear")
     public void waitForAuthButton() {
@@ -38,24 +43,28 @@ public class LoginPage {
     @Step("Wait until Enter header is appear")
     public LoginPage enterHeaderShouldBeVisible() {
         enterHeader.shouldBe(Condition.visible);
+        authorizationButton.shouldBe(Condition.enabled);
         return this;
     }
 
     @Step("Type email in field")
     public LoginPage typeEmail(String email) {
+        emailField.click();
         emailField.val(email);
         return this;
     }
 
     @Step("Type password in field")
     public LoginPage typePassword(String password) {
+        passwordField.click();
         passwordField.val(password);
         return this;
     }
 
     @Step("Click auth button from Login page")
     public MainPage clickLoginPageAuthButton() {
-        authorizationButton.click();
+       // sleep(500);
+        authorizationButton.shouldBe(Condition.enabled).click();
         return page(MainPage.class);
     }
 

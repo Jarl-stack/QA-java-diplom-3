@@ -10,19 +10,21 @@ import static org.junit.Assert.assertEquals;
 public class RegistrationWithInvalidPasswordTest {
 
     String password;
+    boolean isErrorMessageAppearExpected;
 
-    public RegistrationWithInvalidPasswordTest(String password) {
+    public RegistrationWithInvalidPasswordTest(String password, boolean isErrorMessageAppearExpected) {
         this.password = password;
+        this.isErrorMessageAppearExpected = isErrorMessageAppearExpected;
     }
 
     @Parameterized.Parameters(name = "Test data: {0} {1} {2} {3} {4}")
     public static Object[][] getTestData() {
         return new Object[][]{
-                {""},
-                {"q"},
-                {"rty"},
-                {"rTy6"},
-                {"1ty6T"}
+                {"", false},
+                {"q", true},
+                {"rty", true},
+                {"rTy6", true},
+                {"1ty6T", true}
         };
     }
 
@@ -30,7 +32,7 @@ public class RegistrationWithInvalidPasswordTest {
     @DisplayName("Parametrized password negative test")
     public void errorMessageWithInvalidPasswordIsAppearTest() {
 
-        boolean isErrorMessageAppear = open(MainPage.URL, MainPage.class)
+        boolean isErrorMessageAppearActual = open(MainPage.URL, MainPage.class)
                 .clickLoginButton()
                 .clickRegistrationButton()
                 .typePassword(password)
@@ -38,7 +40,7 @@ public class RegistrationWithInvalidPasswordTest {
                 .clickConfirmRegistrationButton()
                 .isErrorMessageAppear();
 
-        assertEquals("error message not appear", true, isErrorMessageAppear);
+        assertEquals("error message not appear", isErrorMessageAppearExpected, isErrorMessageAppearActual);
     }
 
 
